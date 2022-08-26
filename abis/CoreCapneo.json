@@ -1,0 +1,503 @@
+[
+  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "storageVariable", "type": "string" }
+    ],
+    "name": "AlreadySet",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "beacon", "type": "address" },
+      { "internalType": "address", "name": "implementation", "type": "address" }
+    ],
+    "name": "ImplementationIsNotContract",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "have", "type": "uint256" },
+      { "internalType": "uint256", "name": "maximum", "type": "uint256" }
+    ],
+    "name": "IndexOutOfRange",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes4", "name": "have", "type": "bytes4" },
+      { "internalType": "bytes4", "name": "want", "type": "bytes4" }
+    ],
+    "name": "InvalidMagicValue",
+    "type": "error"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "nft", "type": "address" }],
+    "name": "NFTNotRegistered",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "paramName", "type": "string" }
+    ],
+    "name": "ZeroParameter",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "oldBeacon",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newBeacon",
+        "type": "address"
+      }
+    ],
+    "name": "NewBeaconSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "proxy",
+        "type": "address"
+      },
+      {
+        "components": [
+          { "internalType": "address", "name": "beacon", "type": "address" },
+          { "internalType": "uint48", "name": "index", "type": "uint48" },
+          { "internalType": "address", "name": "deployer", "type": "address" },
+          {
+            "internalType": "uint48",
+            "name": "deployedTimestamp",
+            "type": "uint48"
+          },
+          {
+            "internalType": "string",
+            "name": "snapshotSpace",
+            "type": "string"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct IRegistryStructs.CapneoNFT",
+        "name": "proxyData",
+        "type": "tuple"
+      }
+    ],
+    "name": "NewCapneoNFTIndexed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "old",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "current",
+        "type": "address"
+      }
+    ],
+    "name": "OpenseaFactoryChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "previousAdminRole",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "newAdminRole",
+        "type": "bytes32"
+      }
+    ],
+    "name": "RoleAdminChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
+    ],
+    "name": "RoleGranted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
+    ],
+    "name": "RoleRevoked",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "BEACON_MANAGER_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "DEFAULT_ADMIN_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "DEPLOYER_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "KYC_SIGNER_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "OPENSEA_MANAGER_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PROTOCOL_MANAGER_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes", "name": "initData", "type": "bytes" },
+      { "internalType": "string", "name": "snapshotSpace", "type": "string" },
+      { "internalType": "bytes4", "name": "magicValue", "type": "bytes4" }
+    ],
+    "name": "deployCapneoNFT",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllNFTAddresses",
+    "outputs": [
+      { "internalType": "address[]", "name": "", "type": "address[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "nft", "type": "address" }],
+    "name": "getBeaconByNFTAddress",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "nft", "type": "address" }],
+    "name": "getCapneoNFTByAddress",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "beacon", "type": "address" },
+          { "internalType": "uint48", "name": "index", "type": "uint48" },
+          { "internalType": "address", "name": "deployer", "type": "address" },
+          {
+            "internalType": "uint48",
+            "name": "deployedTimestamp",
+            "type": "uint48"
+          },
+          {
+            "internalType": "string",
+            "name": "snapshotSpace",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct IRegistryStructs.CapneoNFT",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "index", "type": "uint256" }
+    ],
+    "name": "getCapneoNFTByIndex",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "beacon", "type": "address" },
+          { "internalType": "uint48", "name": "index", "type": "uint48" },
+          { "internalType": "address", "name": "deployer", "type": "address" },
+          {
+            "internalType": "uint48",
+            "name": "deployedTimestamp",
+            "type": "uint48"
+          },
+          {
+            "internalType": "string",
+            "name": "snapshotSpace",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct IRegistryStructs.CapneoNFT",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "nft", "type": "address" }],
+    "name": "getIndexByNFTAddress",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256[]", "name": "indices", "type": "uint256[]" }
+    ],
+    "name": "getMultipleCapneoNFTsByIndex",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "beacon", "type": "address" },
+          { "internalType": "uint48", "name": "index", "type": "uint48" },
+          { "internalType": "address", "name": "deployer", "type": "address" },
+          {
+            "internalType": "uint48",
+            "name": "deployedTimestamp",
+            "type": "uint48"
+          },
+          {
+            "internalType": "string",
+            "name": "snapshotSpace",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct IRegistryStructs.CapneoNFT[]",
+        "name": "ret",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "index", "type": "uint256" }
+    ],
+    "name": "getNFTAddressByIndex",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getNumberOfNfts",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getOpenseaFactory",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getProtocolFeeRecipient",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" }
+    ],
+    "name": "getRoleAdmin",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "nft", "type": "address" }],
+    "name": "getUpgraderByNFTAddress",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "grantRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "hasRole",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "nft", "type": "address" }],
+    "name": "isNFTRegistered",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "who", "type": "address" },
+      { "internalType": "bytes", "name": "signature", "type": "bytes" }
+    ],
+    "name": "isValidKYC",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "renounceRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "revokeRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "newBeacon", "type": "address" },
+      { "internalType": "bytes4", "name": "magicValue", "type": "bytes4" }
+    ],
+    "name": "setNewBeacon",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "newFactory", "type": "address" },
+      { "internalType": "bytes4", "name": "magicValue", "type": "bytes4" }
+    ],
+    "name": "setOpenseaFactory",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "protocolFeeRecipient",
+        "type": "address"
+      },
+      { "internalType": "bytes4", "name": "magicValue", "type": "bytes4" }
+    ],
+    "name": "setProtocolFeeRecipient",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes4", "name": "interfaceId", "type": "bytes4" }
+    ],
+    "name": "supportsInterface",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

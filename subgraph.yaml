@@ -1,0 +1,38 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CoreCapneo
+    network: mumbai
+    source:
+      address: "0x03b08cb5c5f62bdcb19698b68863273650a4f015"
+      abi: CoreCapneo
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - NewBeaconSet
+        - NewCapneoNFTIndexed
+        - OpenseaFactoryChanged
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+      abis:
+        - name: CoreCapneo
+          file: ./abis/CoreCapneo.json
+      eventHandlers:
+        - event: NewBeaconSet(address,address)
+          handler: handleNewBeaconSet
+        - event: NewCapneoNFTIndexed(address,(address,uint48,address,uint48,string))
+          handler: handleNewCapneoNFTIndexed
+        - event: OpenseaFactoryChanged(address,address)
+          handler: handleOpenseaFactoryChanged
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+      file: ./src/core-capneo.ts
